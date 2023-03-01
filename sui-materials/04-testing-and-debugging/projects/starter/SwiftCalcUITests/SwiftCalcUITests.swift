@@ -43,7 +43,41 @@ final class SwiftCalcUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
+    func test_SwipeToClearMemory() throws {
+        let app = XCUIApplication()
+        app.launch()
+        let threeButton = app.buttons["3"]
+        threeButton.tap()
+        let fiveButton = app.buttons["5"]
+        fiveButton.tap()
+        let memoryButton = app.buttons["M+"]
+        memoryButton.tap()
+        let memoryDisplay = app.staticTexts["memoryDisplay"]
+        // 1
+        XCTAssert(memoryDisplay.exists)
+        // 2
+        memoryDisplay.swipeLeft()
+        // 3
+        XCTAssertFalse(memoryDisplay.exists)
+    }
+    
+    func testAddingTwoDigits() {
+        let app = XCUIApplication()
+        app.launch()
+        let threeButton = app.buttons["3"]
+        threeButton.tap()
+        let addButton = app.buttons["+"]
+        addButton.tap()
+        let fiveButton = app.buttons["5"]
+        fiveButton.tap()
+        let equalButton = app.buttons["="]
+        equalButton.tap()
+        let display = app.staticTexts["display"]
+        let displayText = display.label
+        XCTAssert(displayText == "8.0")
+    }
+    
+    func test_displayStartsWithLabel0() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
